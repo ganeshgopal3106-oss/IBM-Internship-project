@@ -14,6 +14,9 @@ function friendlyError(error, fallback) {
   if (error?.name === 'AbortError') {
     return 'Request timed out. Please try again.';
   }
+  if (error?.message) {
+    return error.message;
+  }
   return fallback || 'MovieMind AI could not complete the request. Please try again.';
 }
 

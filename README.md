@@ -1,77 +1,16 @@
-# MovieMind AI - Your Intelligent Movie Assistant
+# React + Vite
 
-MovieMind AI is an AI-powered movie companion for chat, recommendations, spoiler-free reviews, plot explanations, comparisons, posters, and personalized watchlists.
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-## Tech Stack
+Currently, two official plugins are available:
 
-- Frontend: React, Vite, Tailwind CSS, Lucide Icons, React Markdown
-- Backend: FastAPI, Pydantic, HTTPX
-- AI: OpenAI Python SDK with the Responses API, default model `gpt-4o-mini`
-- Metadata/Posters: TMDb API
-- Deployment: Docker and Docker Compose, AWS-ready container settings
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Environment
+## React Compiler
 
-Create `backend/.env` for local backend development, or provide these variables through Docker/AWS environment settings:
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-```env
-OPENAI_API_KEY=your_openai_api_key_here
-TMDB_API_KEY=your_tmdb_api_key_here
-OPENAI_MODEL=gpt-4o-mini
-FRONTEND_ORIGINS=http://localhost:3000,http://localhost:5173
-```
+## Expanding the Oxlint configuration
 
-There is no demo or mock AI mode. `OPENAI_API_KEY` is required for AI-generated chat, reviews, explanations, comparisons, recommendations, and watchlists. `TMDB_API_KEY` is required for reliable title resolution, metadata, ambiguity detection, and posters. If a poster is unavailable, the UI shows a local no-poster card without exposing keys.
-
-## Run With Docker Compose
-
-```bash
-docker-compose up --build
-```
-
-Frontend: `http://localhost:3000`
-Backend: `http://localhost:8000`
-Health check: `http://localhost:8000/health`
-
-## Run Locally
-
-Backend:
-
-```bash
-cd backend
-python -m venv venv
-.\venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-```
-
-Frontend:
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-## Tests
-
-```bash
-cd backend
-pytest
-
-cd ../frontend
-npm run build
-```
-
-## API
-
-- `POST /chat` streams plain text.
-- `POST /recommend` streams plain text.
-- `POST /review` streams plain text.
-- `POST /explain` streams plain text.
-- `POST /compare` streams plain text with markdown tables.
-- `POST /watchlist` streams plain text.
-- `GET /poster?title=...` returns JSON poster and metadata details.
-- `GET /health` returns JSON service status.
-
-All JSON endpoints validate inputs with Pydantic. Streaming endpoints return `text/plain` and produce user-friendly text for unknown or ambiguous movies.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.

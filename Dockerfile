@@ -1,26 +1,20 @@
-# Build stage
-FROM node:20-alpine AS build
+FROM node:20-alpine
 
 WORKDIR /app
 
+# Install dependencies
 COPY package*.json ./
 RUN npm install
 
+# Copy source files
 COPY . .
 
-# Pass build environment variables if needed (e.g. backend URL)
-ARG VITE_API_URL
-ENV VITE_API_URL=$VITE_API_URL
-
+# Build the React app
 RUN npm run build
 
-# Serve stage
-FROM nginx:alpine
+# Expose the default Render Web Service port
+EXPOSE 10000
+ENV PORT=10000
 
-# Copy built assets
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Expose port
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# Start the Node/Express proxy server
+CMD ["node", "server.js"]

@@ -339,10 +339,8 @@ export async function streamEndpoint(path, payload, onChunk, options = {}) {
   if (isNvidia) {
     body.top_p = 0.95;
     body.max_tokens = 16384;
-    body.extra_body = {
-      chat_template_kwargs: { enable_thinking: true },
-      reasoning_budget: 16384
-    };
+    body.chat_template_kwargs = { enable_thinking: true };
+    body.reasoning_budget = 16384;
   } else {
     body.max_tokens = 1200;
   }

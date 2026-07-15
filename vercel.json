@@ -1,12 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/api-nvidia/(.*)",
-      "destination": "https://integrate.api.nvidia.com/$1"
+      "source": "/api-nvidia/:path*",
+      "destination": "https://integrate.api.nvidia.com/:path*"
     },
     {
-      "source": "/api-imdb/(.*)",
-      "destination": "https://imdb.iamidiotareyoutoo.com/$1"
+      "source": "/api-imdb/:path*",
+      "destination": "https://imdb.iamidiotareyoutoo.com/:path*"
     }
   ]
 }

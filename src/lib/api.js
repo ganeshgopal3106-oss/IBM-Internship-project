@@ -54,26 +54,34 @@ async function searchMoviesFallback(query, limit = 6) {
   const cleaned = (query || '').trim();
   if (!cleaned || cleaned.length > 120) return [];
   
-  // Use proxy path to bypass CORS
-  const url = `${IMDB_BASE_URL}/search?q=${encodeURIComponent(cleaned)}`;
+  const firstLetter = cleaned[0].toLowerCase();
+  const url = `${IMDB_BASE_URL}/suggests/${firstLetter}/${encodeURIComponent(cleaned)}.json`;
+  
   try {
     const res = await fetch(url);
     if (res.ok) {
-      const data = await res.json();
-      const description = data.description || [];
-      return description.slice(0, limit).map(item => {
-        const imdbId = item["#IMDB_ID"] || "";
-        const numericId = parseInt(imdbId.replace(/\D/g, ''), 10) || 0;
-        return {
-          id: numericId,
-          title: item["#TITLE"] || "Untitled",
-          release_year: item["#YEAR"] || null,
-          overview: item["#ACTORS"] ? `Actors: ${item["#ACTORS"]}` : '',
-          poster_url: item["#IMG_POSTER"] || null,
-          genres: [],
-          rating: null
-        };
-      });
+      const text = await res.text();
+      const start = text.indexOf('(');
+      const end = text.lastIndexOf(')');
+      if (start !== -1 && end !== -1) {
+        const jsonStr = text.substring(start + 1, end);
+        const data = JSON.parse(jsonStr);
+        const description = data.d || [];
+        return description.slice(0, limit).map(item => {
+          const imdbId = item.id || "";
+          const numericId = parseInt(imdbId.replace(/\D/g, ''), 10) || 0;
+          const posterUrl = item.i && item.i.length ? item.i[0] : null;
+          return {
+            id: numericId,
+            title: item.l || "Untitled",
+            release_year: item.y || null,
+            overview: item.s ? `Actors: ${item.s}` : '',
+            poster_url: posterUrl,
+            genres: [],
+            rating: null
+          };
+        });
+      }
     }
   } catch (err) {
     console.error("Fallback search failed:", err);

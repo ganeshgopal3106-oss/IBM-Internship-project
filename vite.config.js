@@ -12,7 +12,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api-nvidia/, '')
       },
       '/api-imdb': {
-        target: 'https://imdb.iamidiotareyoutoo.com',
+        target: 'https://sg.media-imdb.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api-imdb/, '')
       }

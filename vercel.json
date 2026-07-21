@@ -6,7 +6,7 @@
     },
     {
       "source": "/api-imdb/:path*",
-      "destination": "https://imdb.iamidiotareyoutoo.com/:path*"
+      "destination": "https://sg.media-imdb.com/:path*"
     },
     {
       "source": "/((?!api-nvidia|api-imdb).*)",

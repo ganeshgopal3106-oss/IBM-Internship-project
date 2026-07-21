@@ -1,7 +1,7 @@
 // Frontend API integration layer (Client-Side Serverless via Edge Proxies)
 
 // Configuration Constants (Easy to replace later)
-export const NVIDIA_API_KEY = "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";
+export const NVIDIA_API_KEY = "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";
 export const NVIDIA_MODEL = "nvidia/nemotron-3-ultra-550b-a55b";
 export const NVIDIA_BASE_URL = "/api-nvidia/v1";
 export const IMDB_BASE_URL = "/api-imdb";
